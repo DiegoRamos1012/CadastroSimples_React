@@ -8,14 +8,19 @@ interface CadastroFormProps {
 const CadastroForm: React.FC<CadastroFormProps> = ({ onSuccess }) => {
   const [nome, setNome] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [senha, setSenha] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setError("");
+    setMessage("");
+
     if (!nome.trim() || !email.trim()) {
-      setMessage("Por favor, preencha todos os campos.");
+      setError("Por favor, preencha todos os campos.");
       return;
     }
 
@@ -25,6 +30,7 @@ const CadastroForm: React.FC<CadastroFormProps> = ({ onSuccess }) => {
       const formData = new FormData();
       formData.append("nome", nome);
       formData.append("email", email);
+      formData.append("senha", senha);
 
       const response = await fetch("http://localhost:8080/cadastro", {
         method: "POST",
@@ -33,13 +39,20 @@ const CadastroForm: React.FC<CadastroFormProps> = ({ onSuccess }) => {
 
       const data: CadastroResponse = await response.json();
 
-      setMessage(data.message);
-      setNome("");
-      setEmail("");
-      onSuccess();
+      if (response.ok) {
+        console.log("POST realizado com sucesso!");
+        console.log("Dados enviados:", { nome, email, senha });
+        setMessage(data.message);
+        setNome("");
+        setEmail("");
+        setSenha("")
+        onSuccess();
+      } else {
+        setError(data.message || "Erro ao realizar cadastro.");
+      }
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
-      setMessage("Erro ao realizar cadastro. Tente novamente.");
+      setError("Erro ao realizar cadastro. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -47,10 +60,10 @@ const CadastroForm: React.FC<CadastroFormProps> = ({ onSuccess }) => {
 
   return (
     <div>
-      <h2>Novo Cadastro</h2>
+      <h2 className="cadastro-title">Novo Cadastro</h2>
       <form id="cadastroForm" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="nome">Nome:</label>
+          <label htmlFor="nome">Nome: </label>
           <input
             type="text"
             id="nome"
@@ -61,12 +74,24 @@ const CadastroForm: React.FC<CadastroFormProps> = ({ onSuccess }) => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">E-mail:</label>
+          <label htmlFor="email">E-mail: </label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="exemplo@email.com"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="senha">Senha: </label>
+          <input
+            type="senha"
+            id="senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
             required
           />
         </div>
@@ -77,6 +102,16 @@ const CadastroForm: React.FC<CadastroFormProps> = ({ onSuccess }) => {
       </form>
 
       {message && <div className="success-message">{message}</div>}
+
+      {error && (
+        <div className="erro-animada">
+          <span className="erro-icon">⚠️</span>
+          <div className="erro-content">
+            <h4>Erro</h4>
+            <p>{error}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

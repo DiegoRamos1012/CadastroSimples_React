@@ -1,16 +1,28 @@
+/* =========================
+   Variáveis e Reset Global
+   ========================= */
 :root {
   font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #272626;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to right,
+    rgb(73, 71, 71),
+    rgb(30, 30, 31)
+  );
 }
 
 a {
@@ -22,31 +34,9 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-image: linear-gradient(
-    to right,
-    rgb(73, 71, 71),
-    rgb(30, 30, 31)
-  ); /* Da esquerda pra direita, começa com rgb(73, 71, 71) e termina com rgb(30, 30, 31) */
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-  font-style: italic;
-  background-image: linear-gradient(to right, rgb(205, 209, 212), rgb(123, 124, 124));
-  background-size: 200% auto;
-  background-clip: text; /* Define onde o plano de fundo deve ser visível */
-  -webkit-background-clip: text; /* Necessário pra compatibilidade entre navegadores. Ex: Safari/Chrome */
-  color: transparent; /* Torna o texto completamente transparente */
-  animation: mudanca-gradiente 3s ease infinite;
-}
-
+/* =========================
+   Layout e Containers
+   ========================= */
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -54,20 +44,71 @@ h1 {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 600px;
+  margin: 0 auto;
+  background: transparent;
+  padding: 24px 0;
 }
 
-/* Form styling */
+.card {
+  padding: 3em;
+  width: 300px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+/* =========================
+   Títulos e Textos
+   ========================= */
+h1 {
+  font-size: 3.2em;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.1;
+  font-style: italic;
+  background-image: linear-gradient(
+    to right,
+    rgb(130, 169, 199),
+    rgb(12, 199, 199)
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: mudanca-gradiente 5s ease infinite;
+}
+
+.cadastro-title {
+  margin-bottom: 1.5rem;
+  margin-top: 1px;
+  text-align: center;
+}
+
+.success-message {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #388e3c;
+  background-color: #e8f5e9;
+  border-radius: 6px;
+  padding: 12px 0;
+  font-weight: 500;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* =========================
+   Formulários
+   ========================= */
 #cadastroForm {
   display: flex;
   flex-direction: column;
@@ -77,7 +118,7 @@ h1 {
 }
 
 #cadastroForm label {
-  text-align: left;
+  text-align: center;
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
@@ -103,7 +144,7 @@ h1 {
   margin-top: 1rem;
   padding: 0.8rem 1.5rem;
   background: linear-gradient(45deg, #646cff, #535bf2);
-  background-size: 200% 200%; /* Preparar para animação do gradiente */
+  background-size: 200% 200%;
   border: none;
   border-radius: 8px;
   color: white;
@@ -114,11 +155,8 @@ h1 {
 
 #cadastroForm button:hover {
   transform: translateY(-2px);
-  /* Adicionar animação de cores quando hover */
   animation: mudanca-gradiente 3s ease infinite;
-  /* Adicionar brilho para realçar o efeito */
   box-shadow: 0 0 8px rgba(100, 108, 255, 0.5);
-  /* Outra opção: mudar para um gradiente diferente */
   background: linear-gradient(45deg, #535bf2, #646cff);
   background-size: 300% 300%;
 }
@@ -127,120 +165,9 @@ h1 {
   transform: translateY(0);
 }
 
-.card {
-  /* Adiciona espaçamento interno de 2em (2x o tamanho da fonte) em todos os lados */
-  padding: 2em;
-
-  /* Define um fundo preto com 10% de opacidade, criando um efeito translúcido */
-  background-color: rgba(0, 0, 0, 0.4);
-
-  /* Arredonda todos os cantos em 10 pixels, suavizando a aparência */
-  border-radius: 10px;
-
-  /* Adiciona uma sombra com 0px de deslocamento horizontal, 4px vertical,
-     6px de desfoque e cor preta com 10% de opacidade */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  /* Limita a largura máxima do card em 500 pixels */
-  max-width: 500px;
-
-  /* Centraliza o card horizontalmente (0 para margens superior/inferior,
-     auto para margens esquerda/direita) */
-  margin: 0 auto;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-/* Estilos personalizados para complementar o Tailwind */
-.input-especial:focus {
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-}
-
-.senha-container {
-  position: relative;
-  display: flex;
-  width: 100%;
-  margin-bottom: 1.5rem;
-}
-
-.senha-container input {
-  flex: 1;
-  margin-bottom: 0;
-}
-
-.toggle-senha {
-  position: absolute;
-  right: 10px;
-  top: -5%; 
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  height: 24px;
-  width: 24px;
-  color: #646cff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.7;
-}
-
-.toggle-senha:hover {
-  opacity: 1;
-}
-
-.toggle-senha.visible {
-  color: #535bf2;
-}
-
-/* Opcional: tamanho do ícone */
-.toggle-senha i {
-  font-size: 16px;
-}
-
-/* Animações personalizadas */
-@keyframes mudanca-gradiente {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.gradiente-animado {
-  background-size: 200% 200%;
-  animation: mudanca-gradiente 3s ease infinite;
-}
-
-/* Modo claro/escuro */
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-
-  #cadastroForm input {
-    background-color: rgba(0, 0, 0, 0.02);
-    border-color: #ddd;
-  }
-
-  .card {
-    background-color: rgba(0, 0, 0, 0.03);
-  }
-}
-
+/* =========================
+   Mensagens de Erro
+   ========================= */
 .erro-animada {
   display: flex;
   align-items: center;
@@ -268,6 +195,26 @@ h1 {
   color: #616161;
 }
 
+/* =========================
+   Animações
+   ========================= */
+@keyframes mudanca-gradiente {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradiente-animado {
+  background-size: 200% 200%;
+  animation: mudanca-gradiente 3s ease infinite;
+}
+
 @keyframes shakeError {
   0%,
   100% {
@@ -286,4 +233,91 @@ h1 {
   80% {
     transform: translateX(5px);
   }
+}
+
+/* =========================
+   Campos Especiais (Senha)
+   ========================= */
+.input-especial:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.senha-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.senha-container input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.toggle-senha {
+  position: absolute;
+  right: 10px;
+  top: -5%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  height: 24px;
+  width: 24px;
+  color: #646cff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+.toggle-senha:hover {
+  opacity: 1;
+}
+
+.toggle-senha.visible {
+  color: #535bf2;
+}
+
+.toggle-senha i {
+  font-size: 16px;
+}
+
+/* =========================
+   Modo Claro
+   ========================= */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+  #cadastroForm input {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-color: #ddd;
+  }
+  .card {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+}
+
+/* =========================
+   Logo
+   ========================= */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
 }
